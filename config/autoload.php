@@ -10,10 +10,22 @@
 
 
 /**
+ * Register the namespaces
+ */
+ClassLoader::addNamespaces(array
+(
+	'MCupic',
+));
+
+
+/**
  * Register the classes
  */
 ClassLoader::addClasses(array
 (
+	// Classes
+	'MCupic\ReplaceInsertTags'                      => 'system/modules/bootstrap_responsive_youtube_embed/classes/ReplaceInsertTags.php',
+
 	// Elements
 	'Contao\ContentBootstrapYoutubeResponsiveEmbed' => 'system/modules/bootstrap_responsive_youtube_embed/elements/ContentBootstrapYoutubeResponsiveEmbed.php',
 ));
@@ -24,5 +36,6 @@ ClassLoader::addClasses(array
  */
 TemplateLoader::addFiles(array
 (
-	'ce_bootstrap_youtube_responsive_embed' => 'system/modules/bootstrap_responsive_youtube_embed/templates',
+	'insert_tag_bootstrap_youtube_responsive_embed' => 'system/modules/bootstrap_responsive_youtube_embed/templates',
+	'ce_bootstrap_youtube_responsive_embed'         => 'system/modules/bootstrap_responsive_youtube_embed/templates',
 ));

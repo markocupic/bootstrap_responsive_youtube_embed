@@ -3,18 +3,22 @@
 <?php $this->block('content'); ?>
 
   <!-- indexer::stop -->
-  <?php if ($this->isVideo): ?>
-    <div class="embed-responsive <?= $this->playerAspectRatio ?>">
-      <iframe class="embed-responsive-item" src="//www.youtube.com/embed/<?= $this->youtube ?>?rel=0<?php if ($this->autoplay): ?>&autoplay=1<?php endif; ?>" allowfullscreen></iframe>
-    </div>
-    <?php if ($this->caption != ""): ?><div class="videoCaption"><?= $this->caption ?></div><?php endif; ?>
-  <?php else: ?>
-    <audio<?= $this->size ?> preload="none"<?php if ($this->autoplay): ?> autoplay<?php endif; ?> controls>
-      <?php foreach ($this->files as $file): ?>
-        <source type="<?= $file->mime ?>" src="<?= $file->path ?>" title="<?= $file->title ?>">
-      <?php endforeach; ?>
-    </audio>
-  <?php endif; ?>
+  <div class="embed-responsive <?= $this->playerAspectRatio ?>">
+    <?php if($this->playerType == 'youtube'): ?>
+      <iframe class="embed-responsive-item" src="//www.youtube.com/embed/<?= $this->movieId ?>?rel=0<?php if ($this->autoplay): ?>&autoplay=1<?php endif; ?>" allowfullscreen></iframe>
+    <?php endif; ?>
+
+    <?php if($this->playerType == 'vimeo'): ?>
+      <iframe class="embed-responsive-item" src="//player.vimeo.com/video/<?= $this->movieId ?>?rel=0<?php if ($this->autoplay): ?>&autoplay=1<?php endif; ?>" allowfullscreen></iframe>
+    <?php endif; ?>
+
+    <?php if($this->playerType == 'dropbox'): ?>
+      <iframe class="embed-responsive-item" src="//dl.dropbox.com/<?= $this->movieId ?>" allowfullscreen></iframe>
+    <?php endif; ?>
+  </div>
+
+  <?php if ($this->caption != ""): ?><div class="videoCaption"><?= $this->caption ?></div><?php endif; ?>
+
   <!-- indexer::continue -->
 
 <?php $this->endblock(); ?>

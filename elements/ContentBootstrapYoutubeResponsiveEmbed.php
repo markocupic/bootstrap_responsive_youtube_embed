@@ -33,14 +33,32 @@ class ContentBootstrapYoutubeResponsiveEmbed extends \ContentElement
 	 */
 	public function generate()
 	{
-		if ($this->youtube == '')
+		if ($this->movieId == '')
 		{
 			return '';
 		}
 
+		// Set the size
+		if ($this->playerAspectRatio == '')
+		{
+			$this->playerAspectRatio = 'embed-responsive-16by9';
+		}
+
 		if (TL_MODE == 'BE')
 		{
-			return '<p><a href="http://youtu.be/' . $this->youtube . '" target="_blank">http://youtu.be/' . $this->youtube . '</a><br>Anzeigeverh&auml;ltnis: ' . $GLOBALS['TL_LANG']['tl_content'][$this->playerAspectRatio] . '</p>';
+
+			if($this->playerType == 'youtube')
+			{
+				return '<p><a href="//youtu.be/' . $this->movieId . '" target="_blank">http://youtu.be/' . $this->movieId . '</a><br>Anzeigeverh&auml;ltnis: ' . $GLOBALS['TL_LANG']['tl_content'][$this->playerAspectRatio] . '<br>CSS-Class: ' . $this->cssID[1] .'</p>';
+			}
+			if($this->playerType == 'vimeo')
+			{
+				return '<p><a href="//player.vimeo.com/video/' . $this->movieId . '" target="_blank">https://player.vimeo.com/video/' . $this->movieId . '</a><br>Anzeigeverh&auml;ltnis: ' . $GLOBALS['TL_LANG']['tl_content'][$this->playerAspectRatio] . '<br>CSS-Class: ' . $this->cssID[1] .'</p>';
+			}
+			if($this->playerType == 'dropbox')
+			{
+				return '<p><a href="//dl.dropbox.com/' . $this->movieId . '" target="_blank">http://dl.dropbox.com/' . $this->movieId . '</a><br>Anzeigeverh&auml;ltnis: ' . $GLOBALS['TL_LANG']['tl_content'][$this->playerAspectRatio] . '<br>CSS-Class: ' . $this->cssID[1] .'</p>';
+			}
 		}
 
 		return parent::generate();
@@ -52,32 +70,8 @@ class ContentBootstrapYoutubeResponsiveEmbed extends \ContentElement
 	 */
 	protected function compile()
 	{
-		$this->Template->size = '';
 
-		// Set the size
-		if ($this->playerAspectRatio == '')
-		{
-			$this->playerAspectRatio = 'embed-responsive-16by9';
-		}
-
-		$this->Template->poster = false;
-
-		// Optional poster
-		if ($this->posterSRC != '')
-		{
-			if (($objFile = \FilesModel::findByUuid($this->posterSRC)) !== null)
-			{
-				$this->Template->poster = $objFile->path;
-			}
-		}
-
-		//$objFile = new \stdClass();
-		//$objFile->mime = 'video/x-youtube';
-		//$objFile->path = '//www.youtube.com/watch?v=' . $this->youtube;
-		//$this->Template->files = array($objFile);
 		$this->Template->autoplay = $this->autoplay;
-		$this->Template->isVideo = true;
-
 
 	}
 }
