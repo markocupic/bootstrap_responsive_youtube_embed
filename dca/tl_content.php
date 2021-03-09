@@ -13,6 +13,7 @@
  * Table tl_content
  */
 $GLOBALS['TL_DCA']['tl_content']['palettes']['bootstrapYoutubeResponsiveEmbed'] = '{type_legend},type,headline;{source_legend},playerType,movieId;{poster_legend:hide},posterSRC;{player_legend},playerAspectRatio,caption,autoplay;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+
 $GLOBALS['TL_DCA']['tl_content']['fields']['playerAspectRatio'] = array
 (
     'label' => &$GLOBALS['TL_LANG']['tl_content']['playerAspectRatio'],
@@ -20,11 +21,11 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['playerAspectRatio'] = array
     'exclude' => true,
     'filter' => true,
     'inputType' => 'select',
-    'options' => array('embed-responsive-16by9', 'embed-responsive-4by3'),
-    'reference' => &$GLOBALS['TL_LANG']['tl_content'],
+    'options' => array('1x1', '4x3', '16x9', '21x9'),
     'eval' => array('helpwizard' => false, 'chosen' => true),
     'sql' => "varchar(32) NOT NULL default ''"
 );
+
 $GLOBALS['TL_DCA']['tl_content']['fields']['playerType'] = array
 (
     'label' => &$GLOBALS['TL_LANG']['tl_content']['playerType'],
@@ -36,6 +37,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['playerType'] = array
     'eval' => array('helpwizard' => false, 'chosen' => true),
     'sql' => "varchar(32) NOT NULL default ''"
 );
+
 $GLOBALS['TL_DCA']['tl_content']['fields']['movieId'] = array
 (
     'label' => &$GLOBALS['TL_LANG']['tl_content']['movieId'],

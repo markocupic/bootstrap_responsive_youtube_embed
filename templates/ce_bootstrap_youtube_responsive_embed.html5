@@ -3,7 +3,7 @@
 <?php $this->block('content'); ?>
 
   <!-- indexer::stop -->
-  <div class="embed-responsive <?= $this->playerAspectRatio ?>">
+  <div class="ratio ratio-<?= $this->playerAspectRatio ?>">
     <?php if($this->playerType == 'youtube'): ?>
       <iframe class="embed-responsive-item" src="//www.youtube.com/embed/<?= $this->movieId ?>?rel=0<?php if ($this->autoplay): ?>&autoplay=1<?php endif; ?>" allowfullscreen></iframe>
     <?php endif; ?>

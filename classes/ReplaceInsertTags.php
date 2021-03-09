@@ -35,7 +35,7 @@ class ReplaceInsertTags extends \System
             $objTemplate = new \FrontendTemplate('ce_bootstrap_youtube_responsive_embed');
             $objTemplate->movieId = $id;
             $objTemplate->playerType = intval($id) ? 'vimeo' : 'youtube';
-            $objTemplate->playerAspectRatio = 'embed-responsive-4by3';
+            $objTemplate->playerAspectRatio = '4x3';
             foreach ($n as $prop)
             {
                 $pieces = explode('=', $prop);

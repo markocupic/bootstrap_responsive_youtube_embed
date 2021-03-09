@@ -33,16 +33,26 @@ class ContentBootstrapYoutubeResponsiveEmbed extends \ContentElement
 	 */
 	public function generate()
 	{
-		if ($this->movieId == '')
+		if ($this->movieId === '')
 		{
 			return '';
 		}
 
 		// Set the size
-		if ($this->playerAspectRatio == '')
+		if ($this->playerAspectRatio === '')
 		{
-			$this->playerAspectRatio = 'embed-responsive-16by9';
+			$this->playerAspectRatio = '16x9';
 		}
+		// Backwarts compatibility...
+        if ($this->playerAspectRatio === 'embed-responsive-16by9')
+        {
+            $this->playerAspectRatio = '16x9';
+        }
+        elseif($this->playerAspectRatio === 'embed-responsive-4by3')
+        {
+            $this->playerAspectRatio = '4x3';
+        }
+
 
 		if (TL_MODE == 'BE')
 		{
