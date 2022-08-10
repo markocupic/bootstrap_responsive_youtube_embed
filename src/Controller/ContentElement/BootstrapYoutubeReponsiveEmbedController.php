@@ -29,11 +29,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @ContentElement(BootstrapYoutubeReponsiveEmbedController::TYPE, category="media", template="ce_bootstrap_youtube_reponsive_embed")
+ * @ContentElement(BootstrapYoutubeReponsiveEmbedController::TYPE, category="media", template="ce_bootstrap_youtube_responsive_embed")
  */
 class BootstrapYoutubeReponsiveEmbedController extends AbstractContentElementController
 {
-    public const TYPE = 'bootstrapYoutubeReponsiveEmbed';
+    public const TYPE = 'bootstrapYoutubeResponsiveEmbed';
 
     // Services
     protected ContaoFramework $contaoFramework;
@@ -69,7 +69,7 @@ class BootstrapYoutubeReponsiveEmbedController extends AbstractContentElementCon
         // Backend preview
         if ($this->scopeMatcher->isBackendRequest($this->requestStack->getCurrentRequest())) {
             $strAspectRatio = $this->translator->trans('tl_content.'.$model->playerAspectRatio, [], 'contao_default');
-            $arrCssId = $this->stringUtil->deserialize($model->csssId, true);
+            $arrCssId = $this->stringUtil->deserialize($model->cssID, true);
 
             if ('youtube' === $model->playerType) {
                 $strResponse = $this->translator->trans(

@@ -20,4 +20,6 @@ $GLOBALS['TL_LANG']['tl_content']['movieId'] = ['Video-ID', 'Bitte geben Sie die
  * References
  */
 $GLOBALS['TL_LANG']['tl_content']['embed-responsive-16by9'] = '16:9';
+$GLOBALS['TL_LANG']['tl_content']['embed-responsive-1by1'] = '1:1';
+$GLOBALS['TL_LANG']['tl_content']['embed-responsive-21by9'] = '21:9';
 $GLOBALS['TL_LANG']['tl_content']['embed-responsive-4by3'] = '4:3';

@@ -25,7 +25,7 @@ class Plugin implements BundlePluginInterface
     public function getBundles(ParserInterface $parser): array
     {
         return [
-            BundleConfig::create(BootstrapResponsiveYoutubeEmbed::class)
+            BundleConfig::create(MarkocupicBootstrapResponsiveYoutubeEmbed::class)
                 ->setLoadAfter([ContaoCoreBundle::class]),
         ];
     }

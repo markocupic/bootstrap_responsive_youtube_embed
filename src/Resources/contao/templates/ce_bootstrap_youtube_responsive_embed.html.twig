@@ -2,17 +2,17 @@
 
 {% block content %}
 
-    <div class="embed-responsive {{ playerAspecRatio }}">
+    <div class="ratio ratio-{{ playerAspectRatio }}">
         {% if playerType == 'youtube' %}
-            <iframe class="embed-responsive-item" src="//www.youtube.com/embed/{{ movieId }}?rel=0{% if autoplay %}&autoplay=1{% endif %}" allowfullscreen></iframe>
+            <iframe src="//www.youtube.com/embed/{{ movieId }}?rel=0{% if autoplay %}&autoplay=1{% endif %}" allowfullscreen></iframe>
         {% endif %}
 
         {% if playerType == 'vimeo' %}
-            <iframe class="embed-responsive-item" src="//player.vimeo.com/video/{{ movieId }}?rel=0{% if autoplay %}&autoplay=1{% endif %}" allowfullscreen></iframe>
+            <iframe src="//player.vimeo.com/video/{{ movieId }}?rel=0{% if autoplay %}&autoplay=1{% endif %}" allowfullscreen></iframe>
         {% endif %}
 
         {% if playerType == 'dropbox' %}
-            <iframe class="embed-responsive-item" src="//dl.dropbox.com/{{ movieId }}" allowfullscreen></iframe>
+            <iframe src="//dl.dropbox.com/{{ movieId }}" allowfullscreen></iframe>
         {% endif %}
     </div>
 
