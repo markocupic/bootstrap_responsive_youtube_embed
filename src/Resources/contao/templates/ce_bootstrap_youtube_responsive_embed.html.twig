@@ -1,0 +1,23 @@
+{% extends '@Contao/block_searchable' %}
+
+{% block content %}
+
+    <div class="embed-responsive {{ playerAspecRatio }}">
+        {% if playerType == 'youtube' %}
+            <iframe class="embed-responsive-item" src="//www.youtube.com/embed/{{ movieId }}?rel=0{% if autoplay %}&autoplay=1{% endif %}" allowfullscreen></iframe>
+        {% endif %}
+
+        {% if playerType == 'vimeo' %}
+            <iframe class="embed-responsive-item" src="//player.vimeo.com/video/{{ movieId }}?rel=0{% if autoplay %}&autoplay=1{% endif %}" allowfullscreen></iframe>
+        {% endif %}
+
+        {% if playerType == 'dropbox' %}
+            <iframe class="embed-responsive-item" src="//dl.dropbox.com/{{ movieId }}" allowfullscreen></iframe>
+        {% endif %}
+    </div>
+
+    {% if not caption is empty %}
+        <div class="videoCaption">{{ caption }}</div>
+    {% endif %}
+
+{% endblock %}
