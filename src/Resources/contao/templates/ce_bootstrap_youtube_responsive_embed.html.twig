@@ -4,15 +4,29 @@
 
     <div class="ratio ratio-{{ playerAspectRatio }}">
         {% if playerType == 'youtube' %}
-            <iframe src="//www.youtube.com/embed/{{ movieId }}?rel=0{% if autoplay %}&autoplay=1{% endif %}" allowfullscreen></iframe>
+            {# https://www.youtube.com/watch?v=###movieId### #}
+            {# Example #}
+            {# Get the shareable youtube link: https://www.youtube.com/watch?v=a7D3A_wwl0g #}
+            {# Everything from "?v=" belongs to the movieId => a7D3A_wwl0g #}
+            <iframe src="//www.youtube.com/embed/{{ movieId|raw }}?rel=0{% if autoplay %}&autoplay=1{% endif %}" allowfullscreen></iframe>
         {% endif %}
 
         {% if playerType == 'vimeo' %}
-            <iframe src="//player.vimeo.com/video/{{ movieId }}?rel=0{% if autoplay %}&autoplay=1{% endif %}" allowfullscreen></iframe>
+            {# https://vimeo.com/###movieId### #}
+            {# Example #}
+            {# Get the shareable vimeo link: https://vimeo.com/479750109 #}
+            {# Everything from ".com/" belongs to the movieId => 479750109 #}
+            <iframe src="//player.vimeo.com/video/{{ movieId|raw }}?rel=0{% if autoplay %}&autoplay=1{% endif %}" allowfullscreen></iframe>
         {% endif %}
 
         {% if playerType == 'dropbox' %}
-            <iframe src="//dl.dropbox.com/{{ movieId }}" allowfullscreen></iframe>
+            <video controls>
+                {# https://dl.dropboxusercontent.com/s/###movieId### #}
+                {# Example #}
+                {# Get the shareabe dropbox link: https://dl.dropboxusercontent.com/s/wtx6x44y61wsxj/sample.mp4?dl=0 #}
+                {# Everything from ".com/s/" belongs to the movieId => wtx6x44y61wsxj/sample.mp4?dl=0 #}
+                <source src="https://dl.dropboxusercontent.com/s/{{ movieId|raw }}" type="video/mp4">
+            </video>
         {% endif %}
     </div>
 
