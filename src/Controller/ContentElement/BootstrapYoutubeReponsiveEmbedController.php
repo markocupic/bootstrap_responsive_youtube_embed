@@ -16,10 +16,12 @@ namespace Markocupic\BootstrapResponsiveYoutubeEmbed\Controller\ContentElement;
 
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Routing\ScopeMatcher;
-use Contao\CoreBundle\ServiceAnnotation\ContentElement;
+use Contao\CoreBundle\Twig\FragmentTemplate;
+use Contao\FrontendTemplate;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\Template;
@@ -28,9 +30,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @ContentElement(BootstrapYoutubeReponsiveEmbedController::TYPE, category="media", template="ce_bootstrap_youtube_responsive_embed")
- */
+#[AsContentElement(type: BootstrapYoutubeReponsiveEmbedController::TYPE, category: 'media', template: 'ce_bootstrap_youtube_responsive_embed')]
 class BootstrapYoutubeReponsiveEmbedController extends AbstractContentElementController
 {
     public const TYPE = 'bootstrapYoutubeResponsiveEmbed';
@@ -105,7 +105,7 @@ class BootstrapYoutubeReponsiveEmbedController extends AbstractContentElementCon
         return parent::__invoke($request, $model, $section, $classes);
     }
 
-    protected function getResponse(Template $template, ContentModel $model, Request $request): Response|null
+    protected function getResponse(Template $template, ContentModel $model, Request $request): Response
     {
         $template->autoplay = (bool) $model->autoplay;
 
