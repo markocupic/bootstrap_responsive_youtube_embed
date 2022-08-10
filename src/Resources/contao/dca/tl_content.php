@@ -22,7 +22,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['playerAspectRatio'] = [
     'exclude'   => true,
     'filter'    => true,
     'inputType' => 'select',
-    'options'   => ['1by1', '21by9', '16by9', '4by3'],
+    'options'   => ['1x1', '4x3', '16x9', '21x9'],
     'reference' => &$GLOBALS['TL_LANG']['tl_content'],
     'eval'      => ['helpwizard' => false, 'chosen' => true],
     'sql'       => "varchar(32) NOT NULL default ''",
