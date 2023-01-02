@@ -8,8 +8,9 @@
             {# Example #}
             {# Get the shareable youtube link: https://www.youtube.com/watch?v=a7D3A_wwl0g #}
             {# Everything from "?v=" belongs to the movieId => a7D3A_wwl0g #}
-            <iframe src="//www.youtube.com/embed/{{ movieId|raw }}?rel=0{% if autoplay %}&autoplay=1{% endif %}" allowfullscreen></iframe>
+            <iframe src="//www.youtube.com/embed/{{ movieId|raw }}?rel=0{% if autoplay %}&autoplay=1{% endif %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         {% endif %}
+
 
         {% if playerType == 'vimeo' %}
             {# https://vimeo.com/###movieId### #}

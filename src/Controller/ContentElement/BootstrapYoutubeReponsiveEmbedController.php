@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Bootstrap Responsive Youtube Embed.
  *
- * (c) Marko Cupic 2022 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license GPL-3.0-or-later
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -20,8 +20,6 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Routing\ScopeMatcher;
-use Contao\CoreBundle\Twig\FragmentTemplate;
-use Contao\FrontendTemplate;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\Template;
@@ -63,7 +61,7 @@ class BootstrapYoutubeReponsiveEmbedController extends AbstractContentElementCon
 
         // Set the size
         if (empty($model->playerAspectRatio)) {
-            $model->playerAspectRatio = 'embed-responsive-16by9';
+            $model->playerAspectRatio = '16x9';
         }
 
         // Backend preview

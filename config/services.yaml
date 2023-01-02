@@ -4,5 +4,5 @@ services:
         autoconfigure: true
 
     Markocupic\BootstrapResponsiveYoutubeEmbed\:
-        resource: ../../
-        exclude: ../../{DependencyInjection,Resources,Model}
+        resource: ../src/
+        exclude: ../src/{DependencyInjection}
