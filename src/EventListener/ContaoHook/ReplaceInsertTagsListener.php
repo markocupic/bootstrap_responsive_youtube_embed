@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Bootstrap Responsive Youtube Embed.
+ * This file is part of Bootstrap Responsive YouTube Embed.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license GPL-3.0-or-later
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -22,7 +22,6 @@ class ReplaceInsertTagsListener
 {
     public function __invoke(string $insertTag, bool $useCache, string $cachedValue, array $flags, array $tags, array $cache, int $_rit, int $_cnt)
     {
-
         if (str_contains($insertTag, 'bootstrapResponsiveYoutubeEmbed')) {
             $arrPieces = explode('::', $insertTag);
             $n = [];
@@ -48,13 +47,12 @@ class ReplaceInsertTagsListener
 
             foreach ($n as $prop) {
                 $pieces = explode('=', $prop);
-                if($pieces[0] === 'autoplay')
-                {
-                    if(isset($pieces[1]) && ($pieces[1] === 'true' || $pieces[1] === '1'))
-                    {
+
+                if ('autoplay' === $pieces[0]) {
+                    if (isset($pieces[1]) && ('true' === $pieces[1] || '1' === $pieces[1])) {
                         $objTemplate->autoplay = true;
                     }
-                }else{
+                } else {
                     $objTemplate->{$pieces[0]} = $pieces[1];
                 }
             }

@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Bootstrap Responsive Youtube Embed.
+ * This file is part of Bootstrap Responsive YouTube Embed.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license GPL-3.0-or-later
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -20,40 +20,30 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Routing\ScopeMatcher;
-use Contao\PageModel;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\StringUtil;
-use Contao\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[AsContentElement(type: BootstrapYoutubeReponsiveEmbedController::TYPE, category: 'media', template: 'ce_bootstrap_youtube_responsive_embed')]
-class BootstrapYoutubeReponsiveEmbedController extends AbstractContentElementController
+#[AsContentElement(type: BootstrapYoutubeResponsiveEmbedController::TYPE, category: 'media')]
+class BootstrapYoutubeResponsiveEmbedController extends AbstractContentElementController
 {
-    public const TYPE = 'bootstrapYoutubeResponsiveEmbed';
+    public const TYPE = 'bootstrap_youtube_responsive_embed';
 
-    // Services
-    protected ContaoFramework $contaoFramework;
-    protected RequestStack $requestStack;
-    protected ScopeMatcher $scopeMatcher;
-    protected TranslatorInterface $translator;
-
-    // Adapters
     protected Adapter $stringUtil;
 
-    public function __construct(ContaoFramework $contaoFramework, RequestStack $requestStack, ScopeMatcher $scopeMatcher, TranslatorInterface $translator)
-    {
-        $this->contaoFramework = $contaoFramework;
-        $this->requestStack = $requestStack;
-        $this->scopeMatcher = $scopeMatcher;
-        $this->translator = $translator;
-
-        // Adapters
+    public function __construct(
+        private readonly ContaoFramework $contaoFramework,
+        private readonly RequestStack $requestStack,
+        private readonly ScopeMatcher $scopeMatcher,
+        private readonly TranslatorInterface $translator,
+    ) {
         $this->stringUtil = $this->contaoFramework->getAdapter(StringUtil::class);
     }
 
-    public function __invoke(Request $request, ContentModel $model, string $section, array $classes = null, PageModel $pageModel = null): Response
+    public function __invoke(Request $request, ContentModel $model, string $section, array|null $classes = null): Response
     {
         if (empty($model->movieId)) {
             return new Response('', Response::HTTP_NO_CONTENT);
@@ -62,6 +52,7 @@ class BootstrapYoutubeReponsiveEmbedController extends AbstractContentElementCon
         // Set the size
         if (empty($model->playerAspectRatio)) {
             $model->playerAspectRatio = '16x9';
+            ///$template->set('playerAspectRatio', $model->playerAspectRatio);
         }
 
         // Backend preview
@@ -71,7 +62,7 @@ class BootstrapYoutubeReponsiveEmbedController extends AbstractContentElementCon
 
             if ('youtube' === $model->playerType) {
                 $strResponse = $this->translator->trans(
-                    'MSC.brjeBackendPrevievYoutube',
+                    'MSC.brjeBackendPreviewYoutube',
                     [$model->movieId, $model->movieId, $strAspectRatio, $arrCssId[1]],
                     'contao_default',
                 );
@@ -81,7 +72,7 @@ class BootstrapYoutubeReponsiveEmbedController extends AbstractContentElementCon
 
             if ('vimeo' === $model->playerType) {
                 $strResponse = $this->translator->trans(
-                    'MSC.brjeBackendPrevievVimeo',
+                    'MSC.brjeBackendPreviewVimeo',
                     [$model->movieId, $model->movieId, $strAspectRatio, $arrCssId[1]],
                     'contao_default',
                 );
@@ -91,7 +82,7 @@ class BootstrapYoutubeReponsiveEmbedController extends AbstractContentElementCon
 
             if ('dropbox' === $model->playerType) {
                 $strResponse = $this->translator->trans(
-                    'MSC.brjeBackendPrevievDropbox',
+                    'MSC.brjeBackendPreviewDropbox',
                     [$model->movieId, $model->movieId, $strAspectRatio, $arrCssId[1]],
                     'contao_default',
                 );
@@ -103,9 +94,10 @@ class BootstrapYoutubeReponsiveEmbedController extends AbstractContentElementCon
         return parent::__invoke($request, $model, $section, $classes);
     }
 
-    protected function getResponse(Template $template, ContentModel $model, Request $request): Response
+    protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
-        $template->autoplay = (bool) $model->autoplay;
+        $template->setData(array_merge($model->row(), $template->getData()));
+        $template->set('autoplay', (bool) $model->autoplay);
 
         return $template->getResponse();
     }

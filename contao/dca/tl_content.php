@@ -3,23 +3,25 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Bootstrap Responsive Youtube Embed.
+ * This file is part of Bootstrap Responsive YouTube Embed.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license GPL-3.0-or-later
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
  * @link https://github.com/markocupic/bootstrap_responsive_youtube_embed
  */
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['bootstrapYoutubeResponsiveEmbed'] = '
+use Markocupic\BootstrapResponsiveYoutubeEmbed\Controller\ContentElement\BootstrapYoutubeResponsiveEmbedController;
+
+$GLOBALS['TL_DCA']['tl_content']['palettes'][BootstrapYoutubeResponsiveEmbedController::TYPE] = '
 {type_legend},type,headline;
 {source_legend},playerType,movieId;
 {poster_legend:hide},posterSRC;
 {player_legend},playerAspectRatio,caption,autoplay;
 {template_legend:hide},customTpl;
 {protected_legend:hide},protected;
-{expert_legend:hide},guests,cssID,space;
+{expert_legend:hide},cssID;
 {invisible_legend:hide},invisible,start,stop
 ';
 
