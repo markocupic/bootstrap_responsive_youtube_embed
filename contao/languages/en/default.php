@@ -22,6 +22,6 @@ $GLOBALS['TL_LANG']['CTE'][BootstrapYoutubeResponsiveEmbedController::TYPE] = ['
 /*
  * Miscellaneous Backend
  */
-$GLOBALS['TL_LANG']['MSC']['brjeBackendPreviewYoutube'] = '<p><a href="//youtu.be/%s" target="_blank">https://youtu.be/%s</a><br>Aspect ratio: %s<br>CSS-class: %s</p>';
-$GLOBALS['TL_LANG']['MSC']['brjeBackendPreviewVimeo'] = '<p><a href="//player.vimeo.com/video/%s" target="_blank">https://player.vimeo.com/video/%s</a><br>Aspect ratio: %s<br>CSS-class: %s</p>';
-$GLOBALS['TL_LANG']['MSC']['brjeBackendPreviewDropbox'] = '<p><a href="//dl.dropbox.com/%s" target="_blank">https://dl.dropbox.com/%s</a><br>Aspect ratio: %s<br>CSS-class: %s</p>';
+$GLOBALS['TL_LANG']['MSC']['brjeBackendPreviewYoutube'] = '<p><a href="//youtu.be/%s" target="_blank" rel=noopener">https://youtu.be/%s</a><br>Aspect ratio: %s<br>CSS-class: %s</p>';
+$GLOBALS['TL_LANG']['MSC']['brjeBackendPreviewVimeo'] = '<p><a href="//player.vimeo.com/video/%s" target="_blank" rel=noopener">https://player.vimeo.com/video/%s</a><br>Aspect ratio: %s<br>CSS-class: %s</p>';
+$GLOBALS['TL_LANG']['MSC']['brjeBackendPreviewDropbox'] = '<p><a href="//dl.dropbox.com/%s" target="_blank" rel=noopener">https://dl.dropbox.com/%s</a><br>Aspect ratio: %s<br>CSS-class: %s</p>';
