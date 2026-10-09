@@ -78,13 +78,18 @@ class BootstrapYoutubeResponsiveEmbedController extends AbstractContentElementCo
             return new Response('', Response::HTTP_NO_CONTENT);
         }
 
-        $movieId = htmlspecialchars((string) $model->movieId, ENT_QUOTES);
+        $movieId = (string) $model->movieId;
         $aspectRatio = $this->translator->trans('tl_content.'.$this->getAspectRatio($model), [], 'contao_default');
-        $cssClass = StringUtil::deserialize($model->cssID, true)[1] ?? '';
+        $cssClass = (string) (StringUtil::deserialize($model->cssID, true)[1] ?? '');
 
         return new Response($this->translator->trans(
             $messageKey,
-            [$movieId, $movieId, htmlspecialchars($aspectRatio, ENT_QUOTES), htmlspecialchars((string) $cssClass, ENT_QUOTES)],
+            [
+                StringUtil::specialcharsUrl($movieId),
+                StringUtil::specialchars($movieId),
+                StringUtil::specialchars($aspectRatio),
+                StringUtil::specialchars($cssClass),
+            ],
             'contao_default',
         ));
     }
