@@ -1,0 +1,32 @@
+{#
+    Renders the responsive video player. Used by the content element and the
+    {{bootstrapResponsiveYoutubeEmbed::…}} insert tag.
+
+    Context:
+        player_type   youtube, vimeo or dropbox
+        movie_id      The video id (see README)
+        aspect_ratio  1x1, 4x3, 16x9 or 21x9
+        autoplay      Start the video automatically
+        caption       An optional caption below the player
+#}
+<div class="ratio ratio-{{ aspect_ratio }}">
+    {% block player %}
+        {% if player_type == 'youtube' %}
+            {# https://www.youtube.com/watch?v=a7D3A_wwl0g => movie_id: a7D3A_wwl0g #}
+            <iframe src="https://www.youtube.com/embed/{{ movie_id }}?rel=0{% if autoplay %}&amp;autoplay=1{% endif %}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {% elseif player_type == 'vimeo' %}
+            {# https://vimeo.com/479750109 => movie_id: 479750109 #}
+            <iframe src="https://player.vimeo.com/video/{{ movie_id }}?rel=0{% if autoplay %}&amp;autoplay=1{% endif %}" title="Vimeo video player" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        {% elseif player_type == 'dropbox' %}
+            {# https://dl.dropboxusercontent.com/s/wtx6x44y61wsxj/sample.mp4?dl=0 => movie_id: wtx6x44y61wsxj/sample.mp4?dl=0 #}
+            <video controls>
+                <source src="https://dl.dropboxusercontent.com/s/{{ movie_id }}" type="video/mp4">
+            </video>
+        {% endif %}
+    {% endblock %}
+</div>
+{% block caption %}
+    {% if caption %}
+        <div class="videoCaption">{{ caption }}</div>
+    {% endif %}
+{% endblock %}

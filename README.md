@@ -4,6 +4,11 @@
 This bundle provides a [Youtube/Vimeo/Dropbox Player](https://getbootstrap.com/docs/5.2/helpers/ratio/#example) content element for the [Contao CMS](https://contao.org/).
 Create responsive video embeds based on the width of the parent by creating an intrinsic ratio that scales on any device.
 
+## Requirements
+
+- Contao 5.3 or later, including Contao 6
+- Bootstrap 5 (the player uses the `ratio` helper classes)
+
 ![Frontend](docs/images/frontend.png)
 
 ## Video Id
@@ -25,5 +30,17 @@ The extension supports Contao Insert tags to embed videos.
     <!-- or a bit more complex -->
     {{bootstrapResponsiveYoutubeEmbed::a7D3A_wwl0g?autoplay=1&caption=Lorem ipsum&playerAspectRatio=4x3}}
 </div>
-
 ```
+
+Options: `autoplay` (`1` or `true`), `caption`, `playerAspectRatio` (`1x1`, `4x3`, `16x9`, `21x9`) and `playerType` (`youtube`, `vimeo`, `dropbox`). Without `playerType`, numeric ids are treated as Vimeo videos and all other ids as YouTube videos.
+
+## Templates
+
+- `content_element/bootstrap_youtube_responsive_embed.html.twig`: the content element
+- `component/_bootstrap_youtube_responsive_embed.html.twig`: the player itself, used by the content element and the insert tag
+
+Both templates use the variables `player_type`, `movie_id`, `aspect_ratio`, `autoplay` and `caption`. The component provides the blocks `player` and `caption`.
+
+### Upgrading to version 3
+
+The template variables have been renamed (e.g. `playerAspectRatio` is now `aspect_ratio`, `movieId` is now `movie_id`) and the player has been moved to the component template. Custom templates of the content element have to be adjusted.

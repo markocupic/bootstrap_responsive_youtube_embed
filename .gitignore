@@ -45,3 +45,11 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Coding standard tools
+/.ecs/vendor/
+/.ecs/composer.lock
+
+# Composer
+/vendor/
+/composer.lock
