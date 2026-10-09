@@ -28,7 +28,7 @@ class MarkocupicBootstrapResponsiveYoutubeEmbedExtension extends Extension
     {
         $loader = new YamlFileLoader(
             $container,
-            new FileLocator(__DIR__.'/../../config')
+            new FileLocator(__DIR__.'/../../config'),
         );
 
         $loader->load('services.yaml');
