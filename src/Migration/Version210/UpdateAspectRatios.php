@@ -61,7 +61,7 @@ class UpdateAspectRatios extends AbstractMigration
             [
                 'bootstrapYoutubeResponsiveEmbed',
                 ...$aspectRatios,
-            ]
+            ],
         );
 
         return false !== $result;

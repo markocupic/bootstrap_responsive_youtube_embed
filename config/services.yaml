@@ -5,4 +5,7 @@ services:
 
     Markocupic\BootstrapResponsiveYoutubeEmbed\:
         resource: ../src/
-        exclude: ../src/{DependencyInjection}
+        exclude:
+            - ../src/ContaoManager/
+            - ../src/DependencyInjection/
+            - ../src/MarkocupicBootstrapResponsiveYoutubeEmbed.php

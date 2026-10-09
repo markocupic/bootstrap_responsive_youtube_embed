@@ -61,7 +61,7 @@ class RenameContentElementType extends AbstractMigration
             ],
             [
                 Types::STRING,
-            ]
+            ],
         );
 
         return false !== $result;

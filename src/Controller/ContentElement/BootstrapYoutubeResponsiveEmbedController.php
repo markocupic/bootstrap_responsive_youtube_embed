@@ -17,13 +17,10 @@ namespace Markocupic\BootstrapResponsiveYoutubeEmbed\Controller\ContentElement;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
-use Contao\CoreBundle\Framework\Adapter;
-use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\StringUtil;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -32,63 +29,25 @@ class BootstrapYoutubeResponsiveEmbedController extends AbstractContentElementCo
 {
     public const TYPE = 'bootstrap_youtube_responsive_embed';
 
-    protected Adapter $stringUtil;
+    public const DEFAULT_ASPECT_RATIO = '16x9';
 
     public function __construct(
-        private readonly ContaoFramework $contaoFramework,
-        private readonly RequestStack $requestStack,
         private readonly ScopeMatcher $scopeMatcher,
         private readonly TranslatorInterface $translator,
     ) {
-        $this->stringUtil = $this->contaoFramework->getAdapter(StringUtil::class);
     }
 
+    /**
+     * @param array<string>|null $classes
+     */
     public function __invoke(Request $request, ContentModel $model, string $section, array|null $classes = null): Response
     {
         if (empty($model->movieId)) {
             return new Response('', Response::HTTP_NO_CONTENT);
         }
 
-        // Set the size
-        if (empty($model->playerAspectRatio)) {
-            $model->playerAspectRatio = '16x9';
-            ///$template->set('playerAspectRatio', $model->playerAspectRatio);
-        }
-
-        // Backend preview
-        if ($this->scopeMatcher->isBackendRequest($this->requestStack->getCurrentRequest())) {
-            $strAspectRatio = $this->translator->trans('tl_content.'.$model->playerAspectRatio, [], 'contao_default');
-            $arrCssId = $this->stringUtil->deserialize($model->cssID, true);
-
-            if ('youtube' === $model->playerType) {
-                $strResponse = $this->translator->trans(
-                    'MSC.brjeBackendPreviewYoutube',
-                    [$model->movieId, $model->movieId, $strAspectRatio, $arrCssId[1]],
-                    'contao_default',
-                );
-
-                return new Response($strResponse);
-            }
-
-            if ('vimeo' === $model->playerType) {
-                $strResponse = $this->translator->trans(
-                    'MSC.brjeBackendPreviewVimeo',
-                    [$model->movieId, $model->movieId, $strAspectRatio, $arrCssId[1]],
-                    'contao_default',
-                );
-
-                return new Response($strResponse);
-            }
-
-            if ('dropbox' === $model->playerType) {
-                $strResponse = $this->translator->trans(
-                    'MSC.brjeBackendPreviewDropbox',
-                    [$model->movieId, $model->movieId, $strAspectRatio, $arrCssId[1]],
-                    'contao_default',
-                );
-
-                return new Response($strResponse);
-            }
+        if ($this->scopeMatcher->isBackendRequest($request)) {
+            return $this->getBackendPreview($model);
         }
 
         return parent::__invoke($request, $model, $section, $classes);
@@ -96,9 +55,42 @@ class BootstrapYoutubeResponsiveEmbedController extends AbstractContentElementCo
 
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
-        $template->setData(array_merge($model->row(), $template->getData()));
+        $template->set('player_type', (string) $model->playerType);
+        $template->set('movie_id', (string) $model->movieId);
+        $template->set('aspect_ratio', $this->getAspectRatio($model));
         $template->set('autoplay', (bool) $model->autoplay);
+        $template->set('caption', (string) $model->caption);
 
         return $template->getResponse();
+    }
+
+    private function getBackendPreview(ContentModel $model): Response
+    {
+        $messageKeys = [
+            'youtube' => 'MSC.brjeBackendPreviewYoutube',
+            'vimeo' => 'MSC.brjeBackendPreviewVimeo',
+            'dropbox' => 'MSC.brjeBackendPreviewDropbox',
+        ];
+
+        $messageKey = $messageKeys[$model->playerType] ?? null;
+
+        if (null === $messageKey) {
+            return new Response('', Response::HTTP_NO_CONTENT);
+        }
+
+        $movieId = htmlspecialchars((string) $model->movieId, ENT_QUOTES);
+        $aspectRatio = $this->translator->trans('tl_content.'.$this->getAspectRatio($model), [], 'contao_default');
+        $cssClass = StringUtil::deserialize($model->cssID, true)[1] ?? '';
+
+        return new Response($this->translator->trans(
+            $messageKey,
+            [$movieId, $movieId, htmlspecialchars($aspectRatio, ENT_QUOTES), htmlspecialchars((string) $cssClass, ENT_QUOTES)],
+            'contao_default',
+        ));
+    }
+
+    private function getAspectRatio(ContentModel $model): string
+    {
+        return $model->playerAspectRatio ?: self::DEFAULT_ASPECT_RATIO;
     }
 }
